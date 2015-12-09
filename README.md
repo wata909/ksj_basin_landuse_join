@@ -61,7 +61,7 @@ CREATE TABLE "w07_09" (gid serial,
 ###流域メッシュデータと土地利用細分メッシュの結合
 同様にして土地利用細分メッシュをインポートした後，細分メッシュコードをキーとして，結合する．SQL分は以下の通り．
 
-```sql:selct_create_table_all.sql
+```
 CREATE TABLE w07_09_select AS SELECT w07_001,w07_002,w07_003,w07_004,w07_005,w07_006, CAST (w07_002 as integer) * 1000 + CAST (w07_006 as integer) as w07_026, geom FROM w07_09 WHERE w07_002 <> 'unknown' ORDER BY w07_001;
 ALTER TABLE w07_09_select ADD COLUMN gid serial primary key;
 CREATE INDEX "w07_09_select_geom" ON w07_09_select USING gist (geom);
@@ -74,5 +74,5 @@ CREATE TABLE w07_l03_09_select_join AS SELECT c1.w07_001,c1.w07_002,c1.w07_003,c
 ALTER TABLE w07_l03_09_select_join ADD COLUMN gid serial primary key;
 CREATE INDEX "w07_l03_09_select_join_geom" ON w07_l03_09_select_join USING gist (geom);
 ```
-
+selct_create_table_all.sql として，ファイルもアップしてあります．ちなみに，データが入っていない場所にunknownと書かれているので，そこは対象外になるので，削除するようになっています．
 
