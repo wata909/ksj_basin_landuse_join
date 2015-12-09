@@ -22,22 +22,22 @@
 まず，
 
 ```
- shp2pgsql -p -S -W cp932 -D -I -s 4326 W07-09_5440-jgd_ValleyMesh.shp w07_09 > ..\table.sql
+shp2pgsql -p -S -W cp932 -D -I -s 4326 W07-09_5440-jgd_ValleyMesh.shp w07_09 > ..\table.sql
 ```
 
 で，テーブルを作るためのsqlを作成．この後，テーブルの中身を読み込むためのsqlを作ればOK．たとえば，
 
 ```
- shp2pgsql -p -S -W cp932 -D -I -s 4326 W07-09_5440-jgd_ValleyMesh.shp w07_09 > ..\table.sql
+shp2pgsql -a -S -W cp932 -D -s 4326 W07-09_5440-jgd_ValleyMesh.shp w07_09 > ..\5440.sql
 ```
 
 で，こいつを
 
 ```
- psql -U postgres -h localhost -d river_mesh -f 5440.sql
+psql -U postgres -h localhost -d river_mesh -f 5440.sql
 ```
 
-見たいにして，全部流せばOK･･･のはずなんだけど，エラーが出てこけるメッシュがある．原因は，table.sqlのcreate文が
+みたいにして，全部流せばOK･･･のはずなんだけど，エラーが出てこけるメッシュがある．原因は，table.sqlのcreate文が
 
 ```
 CREATE TABLE "w07_09" (gid serial,
@@ -76,3 +76,5 @@ CREATE INDEX "w07_l03_09_select_join_geom" ON w07_l03_09_select_join USING gist 
 ```
 selct_create_table_all.sql として，ファイルもアップしてあります．ちなみに，データが入っていない場所にunknownと書かれているので，そこは対象外になるので，削除するようになっています．
 
+##おわりに
+もっとスマートな方法があるなら，教えて(汗
