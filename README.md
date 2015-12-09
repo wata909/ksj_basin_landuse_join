@@ -12,6 +12,10 @@
 参考は， http://qiita.com/yellow_73/items/f2d8388e88d534066bc0
 
 まず，
+
+```
  shp2pgsql -p -S -W cp932 -D -I -s 4326 W07-09_5440-jgd_ValleyMesh.shp w07_09 > ..\table.sql
-で，テーブルを作るためのsqlを作成
+```
+
+で，テーブルを作るためのsqlを作成．
 
