@@ -76,5 +76,23 @@ CREATE INDEX "w07_l03_09_select_join_geom" ON w07_l03_09_select_join USING gist 
 ```
 selct_create_table_all.sql として，ファイルもアップしてあります．ちなみに，データが入っていない場所にunknownと書かれているので，そこは対象外になるので，削除するようになっています．
 
+###geomの座標変換
+上記の処理だと、SRIDが4326なんだけど、この後の処理の関係で、SRIDを4612に変える必要があった。SQLは以下の通り。
+
+```
+CREATE TABLE lumesh AS SELECT c1.w07_001,c1.w07_002,c1.w07_003,c1.w07_004,c1.w07_005,c1.w07_006,c1.w07_026,c1.lu, ST_Transform(c1.geom, 4612) as geom,c1.gid,c1.basinid
+  FROM lumesh_4326 c1;
+CREATE INDEX "lumesh_geom" ON lumesh USING gist (geom);
+ALTER TABLE lumesh ADD CONSTRAINT lumesh_pkey PRIMARY KEY(gid);
+```
+
+もっとも、joinする時のgeomのところを
+
+```
+ST_Transform(c1.geom, 4612) as geom
+```
+
+としておけばよかっただけの話かな。
+
 ##おわりに
 もっとスマートな方法があるなら，教えて(汗
